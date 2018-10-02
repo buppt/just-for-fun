@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
+<style>
     .container {
         margin: 0;
         width: 100%;
@@ -188,17 +181,13 @@
             opacity: 1;
         }
     }
+</style>
 
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="logo">
-            <div class="white"></div>
-            <div class="orange"></div>
-            <div class="red"></div>
-        </div>
-        <h1>Loading ...</h1>
+<div class="container">
+    <div class="logo">
+        <div class="white"></div>
+        <div class="orange"></div>
+        <div class="red"></div>
     </div>
-</body>
-</html>
+    <h1>Loading ...</h1>
+</div>
