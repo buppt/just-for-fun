@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        *{
+			margin:0;
+			padding:0;
+		}
+		.roll{
+			margin: 100px auto;
+			width: 200px;
+			height: 40px;
+			overflow:hidden;
+			border: 1px solid aquamarine;
+		}
+		.roll ul{
+			list-style: none;
+		}
+		.roll li{
+			line-height:20px;
+			font-size:14px;
+			text-align:center;
+		}
+
+    </style>
+</head>
+
+<body>
+    <div class="roll" id="roll">
+    <ul>
+         <li>第一个结构</li>
+         <li>第二个结构</li>
+         <li>第三个结构</li>
+         <li>第四个结构</li>
+         <li>第五个结构</li>
+         <li>第六个结构</li>
+         <li>第七个结构</li>
+         <li>第八个结构</li>
+    </ul>
+	</div>
+	<script>
+	 $(document).ready(function(){
+            setInterval(function(){  // 添加定时器，每1.5s进行转换
+                $("#roll").find("ul:first").animate({
+                        marginTop:"-40px"  //每次移动的距离
+                },500,function(){   // 动画运动的时间
+                        //$(this)指的是ul对象，
+                        //ul复位之后把第一个元素和第二个元素插入
+                        //到ul的最后一个元素的位置
+                        $(this).css({marginTop:"0px"})
+						$(this).find("li:first").appendTo(this);
+                        $(this).find("li:first").appendTo(this);
+                });
+            },2000)
+        });
+
+	</script>
+</body>
+
+</html>
