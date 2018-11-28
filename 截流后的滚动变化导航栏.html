@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        header{
+            width: 100%;
+            height: 100px;
+            line-height: 100px;
+            background-color: rgba(0, 0, 0, 0); 
+            position: fixed;
+            z-index: 99;
+            text-align: center;
+            margin-top: 20px;
+            transition: 0.5s;
+        }
+        main{
+            background-color: antiquewhite;
+            height: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        这里是导航栏～～
+    </header>
+    <main>
+
+    </main>
+    <script>
+        let header = document.getElementById('header');
+        window.addEventListener('scroll',throttle(winScroll));
+        function winScroll(e){
+            let elementScrollTop = document.documentElement.scrollTop;
+            let top = 20 - elementScrollTop;
+            console.log(top);
+            if(top>0){
+                header.style.marginTop='20px';
+                header.style.backgroundColor='rgba(0, 0, 0, 0)'
+            }else{
+                header.style.marginTop=0;
+                header.style.backgroundColor='rgba(0, 0, 0, 0.5)'
+            }
+        }
+        function throttle(fn,interval=150){
+            let canRun = true;
+            return function(){
+                if (!canRun) return;
+                canRun = false;
+                setTimeout(()=>{
+                    fn();
+                    canRun=true;
+                },interval);
+            }
+        }
+        //防抖函数，这里用不到
+        function debounce(fn,interval=300){
+            let timeout=null;
+            return function(){
+                clearTimeout(timeout);
+                timeout = setTimeout(()=>{
+                    fn()
+                },interval)
+            }
+        }
+    </script>
+</body>
+</html>
