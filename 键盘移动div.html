@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container{
+            width: 800px;
+            height: 500px;
+            background: #000;
+            margin:auto;
+            margin-top:80px;
+            position: relative;
+            border: 1px solid #000; 
+        }
+        .mover{
+            width: 80px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            background:#fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id = "mover" class="mover">hello</div>
+    </div>
+    <script>
+        class DivMove{
+            constructor(el,step=10){
+                this.el = el;
+                this.step = step;
+                this.left = el.offsetLeft;
+                this.top = el.offsetTop;
+            }
+            render(){
+                this.el.style.top = `${this.top}px`;
+                this.el.style.left = `${this.left}px`;
+                
+            }
+            moveLeft(){
+                this.left -= this.step
+                this.render()
+            }
+            moveRight(){
+                this.left += this.step
+                this.render()
+            }
+            moveUp(){
+                this.top -= this.step
+                this.render()
+            }
+            moveDown(){
+                this.top += this.step
+                this.render()
+            }
+        }
+        const mover = document.getElementById('mover');
+        const move = new DivMove(mover);
+
+        function moveSlide() {
+            keyDownSet.forEach(key => eventKeyDown(key))
+        }
+        function eventKeyDown (key) {
+            switch (key) {
+                case 37:
+                    move.moveLeft()
+                    break
+                case 38:
+                    move.moveUp()
+                    break
+                case 39:
+                    move.moveRight()
+                    break
+                case 40:
+                    move.moveDown()
+                    break
+            }
+        }
+        let keyDownSet = new Set();
+
+        document.addEventListener('keydown', (e) => {
+            e.preventDefault()
+            keyDownSet.add(e.keyCode)
+            moveSlide()
+        })
+        document.addEventListener('keyup', (e) => {
+            keyDownSet.delete(e.keyCode)
+        })
+        
+    </script>
+</body>
+</html>
