@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container{
+            width: 500px;
+            height: 500px;
+            background-color: black;
+            position: relative;
+        }
+        .mover{
+            width: 50px;
+            height: 50px;
+            background-color: wheat;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" ondrop="dropElement(event)" ondragover="allowDrop(event)">
+        <div id="mover" class="mover" draggable="true" ondragstart="dragStart(event)"></div>
+    </div>
+    <script>
+        function dragStart(e){
+            e.dataTransfer.setData("id",e.target.id)            
+        }
+        function dropElement(e){
+            e.preventDefault();
+            let id = e.dataTransfer.getData("id");
+            let element = document.getElementById(id);
+            element.style.left = (e.pageX || e.clientX )+'px';
+            element.style.top = (e.pageY || e.clientY )+'px';
+        }
+        function allowDrop(ev){
+            ev.preventDefault();
+        }
+    </script>
+</body>
+</html>
