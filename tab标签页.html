@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .tab-head div{
+        border: solid cornflowerblue 1px;
+        width: 50px;
+        height: 25px;
+        float: left;
+        text-align: center;
+    }
+    
+    .tab-content {
+        border: solid cornflowerblue 1px;
+        width: 154px;
+        height: 100px;
+    }
+    
+    .tab-content div{
+        display: none;
+    }
+    
+    .selected {
+        background-color: cornflowerblue;
+    }
+    
+    .tab-content .show{
+        display: block;
+    }
+    </style>
+</head>
+<body>
+    <div class="tab-head">
+        <div class="selected">1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+    <div class="tab-content">
+        <div class="show">content1</div>
+        <div>content2</div>
+        <div>content3</div>
+    </div>
+    <script>
+     var tabs = document.getElementsByClassName('tab-head')[0].getElementsByTagName('div'),
+        contents = document.getElementsByClassName('tab-content')[0].getElementsByTagName('div');
+
+    (function changeTab(tab) {
+        for(var i = 0, len = tabs.length; i < len; i++) {
+            tabs[i].onclick = showTab;
+        }
+    })();
+
+    function showTab() {
+        for(var i = 0, len = tabs.length; i < len; i++) {
+            if(tabs[i] === this) {
+                tabs[i].className = 'selected';
+                contents[i].className = 'show';
+            } else {
+                tabs[i].className = '';
+                contents[i].className = '';
+            }
+        }
+    }
+    </script>
+</body>
+</html>
