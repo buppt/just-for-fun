@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class FakePromise{
+            constructor(fn){
+                if (typeof fn !== 'function') {
+                    throw new Error('fn must be a function!')
+                }
+                this.state = 'pending'
+                this.value = null
+                this.doneList = []
+                this.failList = []
+
+                fn(this.resolve.bind(this), this.reject.bind(this))
+            }
+            then(done,fail){
+                this.doneList.push(done)
+                this.failList.push(fail || null)
+                return this
+            }
+            resolve(val){
+                var This = this
+                this.state = 'fulfilled'
+                setTimeout(function() {
+                    let fn = null;
+                    while (fn = This.doneList.shift()) {
+                        This.failList.shift()
+                        val = fn(val)
+                        if (val instanceof FakePromise) {
+                            val.doneList = This.doneList
+                            val.failList = This.failList 
+                            break
+                        }
+                    }
+                }, 0)
+            }
+            reject(val){
+                var This = this 
+                this.state = 'rejected'
+                setTimeout(function() {
+                    val = This.failList.shift()(val) 
+                    This.doneList.shift()
+                    if (val instanceof FakePromise) {
+                        val.doneList = This.doneList
+                        val.failList = This.failList
+                    } else {
+                        let fn = null
+                        while (fn = This.doneList.shift()) {
+                            This.failList.shift()
+                            val = fn(val)
+                            if (val instanceof FakePromise) {
+                                val.doneList = This.doneList
+                                val.failList = This.failList 
+                                break
+                            }
+                        }
+                    }
+                }, 0)
+            }
+        }
+        // let promise = new FakePromise((resolve,reject)=>{
+        //     resolve('success'); //这里如果是reject('fail')
+        // });
+        // promise.then((res)=>{
+        //     console.log(res); // 输出：success
+        // },(err)=>{
+        //     console.log(err); // 上面如果执行reject('fail') 这里就输出:fail
+        // });
+        // let promise2 = new FakePromise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve('setTimeout');
+        //     }, 500);
+        // })
+        // promise2.then((res) => {
+        //     console.log(res);
+        // }, (err) => {
+        //     console.log(err);
+        // })
+        let p = new Promise((resolve, reject) => {
+            reject('fail');
+        })
+        p.then((res)=>{
+            console.log(res); // success
+            return 'hello world!' 
+        },(err)=>{
+            console.log(err); 
+            return 'p'
+        }).then((res)=>{
+            console.log('resolve',res); // hello world   
+        },(err)=>{
+            console.log('reject',err);
+        })
+        // let promise3 = new FakePromise((resolve, reject) => {
+        //     resolve();
+        // })
+        // promise3.then((res)=>{
+        //     return new FakePromise((resolve,reject)=>{ //返回一个新的Promise
+        //         resolve('hello world'); 
+        //     })
+        // },(err)=>{
+        //     console.log(err); 
+        // }).then((res)=>{
+        //     console.log(res); //hello world    
+        // },(err)=>{
+        //     console.log(err);
+        // })
+
+        // let promise4 = new Promise((resolve, reject)=>{
+        //     resolve('hello worldchuangtou');
+        // })
+        // promise4.then().then().then().then().then((res)=>{ 
+        //     console.log(res);//我们希望可以正常打印出hello world，如何处理呢？
+        // })
+
+    </script>
+</body>
+</html>
