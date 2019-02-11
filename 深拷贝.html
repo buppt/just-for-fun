@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var array = [
+        { number: {a: 1} },
+        { number: 2 },
+        { number: copy }
+    ];
+    var copyArray = JSON.parse(JSON.stringify(array))
+    //JSON.stringify将对象转为json字符串，JSON.parse将json字符串转为js对象。
+    copyArray[0].number.a = 100;
+    console.log(array); 
+    console.log(copyArray);
+
+    function copy (obj) {
+        var newobj = obj.constructor === Array ? [] : {};
+        if(typeof obj !== 'object'){
+            return;
+        }
+        for(var i in obj){
+        newobj[i] = typeof obj[i] === 'object' ?
+        copy(obj[i]) : obj[i];
+        }
+        return newobj
+    }
+
+    var copyArray2 = copy(array)
+    copyArray2[0].number.a = 1000;
+    console.log(array);
+    console.log(copyArray2);
+
+
+    </script>
+</body>
+</html>
